@@ -1,76 +1,63 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --radius: 0.625rem;
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.145 0 0);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.4641 0.0722 216.21);
-    --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.8711 0.1524 129.14);
-    --secondary-foreground: oklch(0.5205 0.1344 131.73);
-    --muted: oklch(0.97 0 0);
-    --muted-foreground: oklch(0.556 0 0);
-    --accent: oklch(0.5428 0.0923 201.59);
-    --accent-foreground: oklch(0.985 0 0);
-    --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(0.922 0 0);
-    --input: oklch(0.922 0 0);
-    --ring: oklch(0.708 0 0);
-    --chart-1: oklch(0.646 0.222 41.116);
-    --chart-2: oklch(0.6 0.118 184.704);
-    --chart-3: oklch(0.398 0.07 227.392);
-    --chart-4: oklch(0.828 0.189 84.429);
-    --chart-5: oklch(0.769 0.188 70.08);
-    --sidebar: oklch(0.4641 0.0722 216.21);
-    --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.4641 0.0722 216.21);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.5428 0.0923 201.59);
-    --sidebar-accent-foreground: oklch(0.985 0 0);
-    --sidebar-border: oklch(0.922 0 0);
-    --sidebar-ring: oklch(0.708 0 0);
+    --radius: 0.5rem;
+    /* Tema claro con paleta Sprinta */
+    --background: 0 0% 98%; /* Fondo gris muy claro */
+    --foreground: 0 0% 15%; /* Texto oscuro */
+    --card: 0 0% 100%; /* Tarjetas blancas */
+    --card-foreground: 0 0% 15%; /* Texto en tarjetas */
+    --popover: 0 0% 100%; /* Popovers blancos */
+    --popover-foreground: 0 0% 15%; /* Texto en popovers */
+    --primary: 174 100% 29%; /* Verde/teal principal como Sprinta */
+    --primary-foreground: 0 0% 98%; /* Texto blanco en primary */
+    --secondary: 174 30% 85%; /* Verde claro para elementos secundarios */
+    --secondary-foreground: 174 50% 25%; /* Verde oscuro para texto en secondary */
+    --muted: 0 0% 95%; /* Fondo silenciado */
+    --muted-foreground: 0 0% 45%; /* Texto silenciado */
+    --accent: 174 60% 45%; /* Acento verde medio */
+    --accent-foreground: 0 0% 98%; /* Texto blanco en accent */
+    --destructive: 0 70% 55%; /* Rojo para destructivo */
+    --destructive-foreground: 0 0% 98%; /* Texto blanco en destructivo */
+    --border: 0 0% 90%; /* Bordes grises claros */
+    --input: 0 0% 95%; /* Fondo de inputs */
+    --ring: 174 100% 29%; /* Ring igual al primary */
+    --chart-1: 174 100% 29%;
+    --chart-2: 140 60% 45%;
+    --chart-3: 200 80% 50%;
+    --chart-4: 50 80% 60%;
+    --chart-5: 320 70% 60%;
   }
 
   .dark {
-    --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
-    --card: oklch(0.205 0 0);
-    --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.205 0 0);
-    --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.922 0 0);
-    --primary-foreground: oklch(0.205 0 0);
-    --secondary: oklch(0.269 0 0);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --accent: oklch(0.269 0 0);
-    --accent-foreground: oklch(0.985 0 0);
-    --destructive: oklch(0.704 0.191 22.216);
-    --border: oklch(1 0 0 / 10%);
-    --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.556 0 0);
-    --chart-1: oklch(0.488 0.243 264.376);
-    --chart-2: oklch(0.696 0.17 162.48);
-    --chart-3: oklch(0.769 0.188 70.08);
-    --chart-4: oklch(0.627 0.265 303.9);
-    --chart-5: oklch(0.645 0.246 16.439);
-    --sidebar: oklch(0.4641 0.0722 216.21);
-    --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.488 0.243 264.376);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.269 0 0);
-    --sidebar-accent-foreground: oklch(0.985 0 0);
-    --sidebar-border: oklch(1 0 0 / 10%);
-    --sidebar-ring: oklch(0.556 0 0);
+    /* Tema oscuro con paleta Sprinta pero manteniendo la estructura */
+    --background: 0 0% 8%; /* Fondo muy oscuro */
+    --foreground: 0 0% 95%; /* Texto claro */
+    --card: 0 0% 12%; /* Tarjetas gris oscuro */
+    --card-foreground: 0 0% 95%; /* Texto claro en tarjetas */
+    --popover: 0 0% 12%; /* Popovers gris oscuro */
+    --popover-foreground: 0 0% 95%; /* Texto claro en popovers */
+    --primary: 174 80% 40%; /* Verde Sprinta adaptado para modo oscuro */
+    --primary-foreground: 0 0% 8%; /* Texto oscuro en primary */
+    --secondary: 174 30% 20%; /* Verde muy oscuro para secondary */
+    --secondary-foreground: 174 60% 80%; /* Verde claro para texto en secondary */
+    --muted: 0 0% 15%; /* Fondo silenciado oscuro */
+    --muted-foreground: 0 0% 65%; /* Texto silenciado claro */
+    --accent: 174 60% 35%; /* Acento verde oscuro */
+    --accent-foreground: 0 0% 95%; /* Texto claro en accent */
+    --destructive: 0 65% 60%; /* Rojo más suave para modo oscuro */
+    --destructive-foreground: 0 0% 95%; /* Texto claro en destructivo */
+    --border: 0 0% 20%; /* Bordes grises oscuros */
+    --input: 0 0% 18%; /* Fondo de inputs oscuro */
+    --ring: 174 80% 40%; /* Ring igual al primary */
+    --chart-1: 174 80% 40%;
+    --chart-2: 140 60% 50%;
+    --chart-3: 200 70% 55%;
+    --chart-4: 50 70% 65%;
+    --chart-5: 320 60% 65%;
   }
 }
 
@@ -78,8 +65,112 @@
   * {
     @apply border-border;
   }
-
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
+  
+  /* Asegurar que el tema se aplique inmediatamente */
+  html.dark {
+    color-scheme: dark;
+  }
+  
+  html.light {
+    color-scheme: light;
+  }
+}
+
+/* Clases personalizadas manteniendo los colores Sprinta */
+@layer components {
+  .sprinta-button {
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    transition: all 0.3s ease;
+  }
+  
+  .sprinta-button:hover {
+    background-color: hsl(var(--primary) / 0.9);
+  }
+  
+  .default-badge {
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+  
+  /* Estilos para tabs manteniendo colores Sprinta */
+  .tab-active {
+    border-bottom: 2px solid hsl(var(--primary));
+    color: hsl(var(--foreground));
+  }
+  
+  .tab-inactive {
+    border-bottom: 2px solid transparent;
+    color: hsl(var(--muted-foreground));
+  }
+
+  /* Status badges estilo Sprinta */
+  .status-active {
+    background-color: hsl(140 60% 85%);
+    color: hsl(140 60% 25%);
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  .status-inactive {
+    background-color: hsl(50 80% 85%);
+    color: hsl(50 80% 25%);
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  .dark .status-active {
+    background-color: hsl(140 60% 20%);
+    color: hsl(140 60% 80%);
+  }
+
+  .dark .status-inactive {
+    background-color: hsl(50 80% 20%);
+    color: hsl(50 80% 80%);
+  }
+}
+
+/* Transiciones suaves para el cambio de tema */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Asegurar que los inputs mantengan el estilo correcto */
+input, select, textarea {
+  background-color: hsl(var(--input)) !important;
+  border-color: hsl(var(--border)) !important;
+  color: hsl(var(--foreground)) !important;
+  transition: all 0.3s ease;
+}
+
+input::placeholder {
+  color: hsl(var(--muted-foreground)) !important;
+}
+
+/* Estilos para Select de Radix con colores Sprinta */
+[data-radix-select-content] {
+  background-color: hsl(var(--popover)) !important;
+  border-color: hsl(var(--border)) !important;
+}
+
+[data-radix-select-item] {
+  color: hsl(var(--popover-foreground)) !important;
+}
+
+[data-radix-select-item]:hover {
+  background-color: hsl(var(--accent)) !important;
+  color: hsl(var(--accent-foreground)) !important;
 }

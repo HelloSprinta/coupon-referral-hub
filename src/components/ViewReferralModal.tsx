@@ -1,4 +1,3 @@
-
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,68 +13,77 @@ export function ViewReferralModal({ referral, onClose }: ViewReferralModalProps)
 
   return (
     <Dialog open={!!referral} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md bg-card border-border">
-        <DialogHeader>
-          <DialogTitle className="text-foreground font-bold">VER REFERIDO</DialogTitle>
-        </DialogHeader>
+      <DialogContent className="sm:max-w-md bg-card border-border p-0 gap-0">
+        {/* Header con estilo personalizado */}
+        <div className="bg-primary text-primary-foreground px-6 py-4 rounded-t-lg">
+          <DialogTitle className="text-lg font-bold tracking-wide">
+            VER REFERIDO
+          </DialogTitle>
+        </div>
         
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="nombre" className="text-sm font-medium text-foreground">
+        {/* Body del modal */}
+        <div className="px-6 py-6 space-y-5">
+          {/* Nombre */}
+          <div className="space-y-3">
+            <Label htmlFor="nombre" className="text-sm font-semibold text-foreground uppercase tracking-wide">
               Nombre
             </Label>
             <Input
               id="nombre"
-              value={referral.name}
+              value={referral.email}
               readOnly
-              className="bg-muted text-foreground border-border"
+              className="bg-input text-foreground border-border h-11 rounded-lg"
             />
           </div>
           
-          <div className="space-y-2">
-            <Label htmlFor="gmail" className="text-sm font-medium text-foreground">
+          {/* Gmail */}
+          <div className="space-y-3">
+            <Label htmlFor="gmail" className="text-sm font-semibold text-foreground uppercase tracking-wide">
               Gmail
             </Label>
             <Input
               id="gmail"
               value={referral.email}
               readOnly
-              className="bg-muted text-foreground border-border"
+              className="bg-input text-foreground border-border h-11 rounded-lg"
             />
           </div>
           
-          <div className="space-y-2">
-            <Label htmlFor="cupon" className="text-sm font-medium text-foreground">
+          {/* Cupón */}
+          <div className="space-y-3">
+            <Label htmlFor="cupon" className="text-sm font-semibold text-foreground uppercase tracking-wide">
               Cupón
             </Label>
             <Input
               id="cupon"
-              value={referral.coupon}
+              value={referral.referralCode}
               readOnly
-              className="bg-muted text-foreground border-border"
+              className="bg-input text-foreground border-border h-11 rounded-lg font-mono"
             />
           </div>
           
-          <div className="space-y-2">
-            <Label htmlFor="plan" className="text-sm font-medium text-foreground">
+          {/* Plan actual */}
+          <div className="space-y-3">
+            <Label htmlFor="plan" className="text-sm font-semibold text-foreground uppercase tracking-wide">
               Plan actual
             </Label>
             <Input
               id="plan"
-              value={referral.plan}
+              value={referral.commission !== "-" ? "Premium" : "Basic"}
               readOnly
-              className="bg-muted text-foreground border-border"
+              className="bg-input text-foreground border-border h-11 rounded-lg"
             />
           </div>
-          
-          <div className="pt-4">
-            <Button
-              onClick={onClose}
-              className="w-full bg-secondary text-secondary-foreground hover:bg-secondary/90"
-            >
-              Guardar
-            </Button>
-          </div>
+        </div>
+        
+        {/* Footer con botón */}
+        <div className="px-6 pb-6">
+          <Button
+            onClick={onClose}
+            className="w-full bg-primary text-primary-foreground hover:bg-primary/90 h-12 rounded-lg font-semibold text-base transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+          >
+            Guardar
+          </Button>
         </div>
       </DialogContent>
     </Dialog>
