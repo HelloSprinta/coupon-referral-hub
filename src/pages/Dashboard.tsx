@@ -1,8 +1,10 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Edit, LogOut } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Edit, LogOut, Plus, Search, Filter, Copy, ChevronDown, ChevronUp, Settings } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useNavigate } from "react-router-dom";
 import { ViewReferralModal } from "@/components/ViewReferralModal";
@@ -13,6 +15,10 @@ const Dashboard = () => {
   const [selectedReferral, setSelectedReferral] = useState<any>(null);
   const [selectedCoupon, setSelectedCoupon] = useState<any>(null);
   const [showCreateCoupon, setShowCreateCoupon] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [accountFilter, setAccountFilter] = useState("all");
+  const [startDate, setStartDate] = useState("2019-01-01");
+  const [endDate, setEndDate] = useState("2025-05-27");
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -21,59 +27,87 @@ const Dashboard = () => {
 
   const referrals = [
     {
-      id: "119011497",
-      registrationDate: "2025-04-21 19:41",
-      status: "VERIFIED",
+      uid: "1103711477",
+      email: "🏯 Futures 202604",
+      registrationDate: "2025-04-21 10:41",
+      referralCode: "YQDTSKN",
       verificationDate: "2025-04-22",
       firstDeposit: "-",
-      profitPoints: "-",
-      commissionPoints: "1.0357",
-      name: "John Doe",
-      email: "john@example.com",
-      coupon: "SUMMER2025",
-      plan: "Premium"
+      firstTrade: "2025-04-22 08:15",
+      commission: "1.0257"
     },
     {
-      id: "119019481",
-      registrationDate: "2025-04-16 09:33",
-      status: "PURCHASE",
+      uid: "1101336368",
+      email: "🈸 海5漂徒",
+      registrationDate: "2025-04-14 05:56",
+      referralCode: "PUP4DRKK",
       verificationDate: "-",
       firstDeposit: "-",
-      profitPoints: "-",
-      commissionPoints: "-",
-      name: "Jane Smith",
-      email: "jane@example.com",
-      coupon: "WINTER2025",
-      plan: "Basic"
+      firstTrade: "-",
+      commission: "-"
+    },
+    {
+      uid: "1101334581",
+      email: "🈸 海6大咕禮",
+      registrationDate: "2025-04-14 05:33",
+      referralCode: "PUP4DRKK",
+      verificationDate: "-",
+      firstDeposit: "-",
+      firstTrade: "-",
+      commission: "-"
+    },
+    {
+      uid: "1101333998",
+      email: "⚡ JiLi",
+      registrationDate: "2025-04-14 05:26",
+      referralCode: "W3GVMRI",
+      verificationDate: "-",
+      firstDeposit: "-",
+      firstTrade: "-",
+      commission: "-"
+    },
+    {
+      uid: "1101306946",
+      email: "Add Note",
+      registrationDate: "2025-04-14 03:46",
+      referralCode: "YQDTSKN",
+      verificationDate: "-",
+      firstDeposit: "-",
+      firstTrade: "-",
+      commission: "-"
     }
   ];
 
-  const coupons = [
+  const referralCodes = [
     {
-      code: "CUSTOMER2025",
-      creationDate: "2025-05-27 08:00",
-      status: "Active",
-      totalReferrals: 0,
+      code: "CUSTOMCODE24",
+      description: "customize code",
+      creationDate: "2025-04-21 10:41",
+      referrals: 0,
+      firstLevelValue: 0,
       totalCommission: 0,
-      trackingApplications: 0,
-      totalCommissionEarned: "25% / 15%",
-      startDate: "2025-05-27",
-      endDate: "2025-12-31",
-      beneficioReferidor: "TOKENS + COMISIÓN DEL 20%",
-      beneficioReferido: "1ER MES GRATIS"
+      trackingVolume: 0,
+      splitRate: "26% / 15%"
     },
     {
-      code: "FORESTT",
-      creationDate: "2025-05-26 00:00",
-      status: "Active",
-      totalReferrals: 0,
+      code: "CREATETIME",
+      description: "to test create t...",
+      creationDate: "2025-04-14 05:56",
+      referrals: 0,
+      firstLevelValue: 0,
       totalCommission: 0,
-      trackingApplications: 0,
-      totalCommissionEarned: "25% / 15%",
-      startDate: "2025-05-26",
-      endDate: "2025-12-31",
-      beneficioReferidor: "TOKENS + COMISIÓN DEL 20%",
-      beneficioReferido: "1ER MES GRATIS"
+      trackingVolume: 0,
+      splitRate: "31% / 10%"
+    },
+    {
+      code: "SETDEFAULT",
+      description: "set default wh...",
+      creationDate: "2025-04-14 05:33",
+      referrals: 0,
+      firstLevelValue: 0,
+      totalCommission: 0,
+      trackingVolume: 0,
+      splitRate: "26% / 15%"
     }
   ];
 
@@ -105,20 +139,66 @@ const Dashboard = () => {
         <Tabs defaultValue="referidos" className="w-full">
           <div className="flex items-center justify-between mb-6">
             <TabsList className="bg-muted">
-              <TabsTrigger value="referidos" className="data-[state=active]:bg-accent">
+              <TabsTrigger value="referidos" className="data-[state=active]:bg-accent data-[state=active]:border-b-2 data-[state=active]:border-primary">
                 Referidos
               </TabsTrigger>
-              <TabsTrigger value="cupones" className="data-[state=active]:bg-accent">
+              <TabsTrigger value="cupones" className="data-[state=active]:bg-accent data-[state=active]:border-b-2 data-[state=active]:border-primary">
                 Cupones de referidos
               </TabsTrigger>
             </TabsList>
-            
-            <Button
-              onClick={() => setShowCreateCoupon(true)}
-              className="bg-secondary text-secondary-foreground hover:bg-secondary/90"
-            >
-              Crear Referral Code
-            </Button>
+          </div>
+
+          {/* Controls Bar */}
+          <div className="flex items-center justify-between mb-6 gap-4">
+            <div className="flex items-center gap-4 flex-1">
+              <Button
+                onClick={() => setShowCreateCoupon(true)}
+                className="bg-secondary text-secondary-foreground hover:bg-secondary/90"
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                Create Referral Code
+              </Button>
+              
+              <div className="relative flex-1 max-w-sm">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                <Input
+                  placeholder="Search by Code or Note"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10 bg-muted border-border"
+                />
+              </div>
+
+              <Select value={accountFilter} onValueChange={setAccountFilter}>
+                <SelectTrigger className="w-40 bg-muted border-border">
+                  <SelectValue placeholder="All Accounts" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Accounts</SelectItem>
+                  <SelectItem value="active">Active</SelectItem>
+                  <SelectItem value="inactive">Inactive</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <Input
+                type="date"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                className="bg-muted border-border"
+              />
+              <span className="text-muted-foreground">to</span>
+              <Input
+                type="date"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                className="bg-muted border-border"
+              />
+              <Button variant="outline" size="icon">
+                <Filter className="w-4 h-4" />
+              </Button>
+            </div>
           </div>
 
           <TabsContent value="referidos">
@@ -127,31 +207,68 @@ const Dashboard = () => {
                 <table className="w-full">
                   <thead className="bg-muted/50">
                     <tr>
-                      <th className="px-4 py-3 text-left text-sm font-medium text-foreground">ID</th>
-                      <th className="px-4 py-3 text-left text-sm font-medium text-foreground">Registration Date</th>
-                      <th className="px-4 py-3 text-left text-sm font-medium text-foreground">Status</th>
-                      <th className="px-4 py-3 text-left text-sm font-medium text-foreground">Verification Date</th>
-                      <th className="px-4 py-3 text-left text-sm font-medium text-foreground">First Deposit</th>
-                      <th className="px-4 py-3 text-left text-sm font-medium text-foreground">Profit Points</th>
-                      <th className="px-4 py-3 text-left text-sm font-medium text-foreground">Commission Points</th>
-                      <th className="px-4 py-3 text-left text-sm font-medium text-foreground">Acciones</th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-foreground">
+                        UID
+                      </th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-foreground">
+                        <div className="flex items-center gap-1">
+                          Registration Date 
+                          <ChevronDown className="w-3 h-3" />
+                        </div>
+                      </th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-foreground">
+                        Referral Code
+                      </th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-foreground">
+                        <div className="flex items-center gap-1">
+                          Verification Date 
+                          <ChevronDown className="w-3 h-3" />
+                        </div>
+                      </th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-foreground">
+                        <div className="flex items-center gap-1">
+                          First Deposit Date 
+                          <ChevronDown className="w-3 h-3" />
+                        </div>
+                      </th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-foreground">
+                        <div className="flex items-center gap-1">
+                          First Trade Date 
+                          <ChevronDown className="w-3 h-3" />
+                        </div>
+                      </th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-foreground">
+                        <div className="flex items-center gap-1">
+                          Commission (USD) 
+                          <ChevronDown className="w-3 h-3" />
+                        </div>
+                      </th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-foreground">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
                     {referrals.map((referral, index) => (
                       <tr
-                        key={referral.id}
+                        key={referral.uid}
                         className={`border-t border-border hover:bg-muted/30 transition-colors ${
                           index % 2 === 0 ? "bg-card" : "bg-muted/10"
                         }`}
                       >
-                        <td className="px-4 py-3 text-sm text-foreground">{referral.id}</td>
+                        <td className="px-4 py-3 text-sm text-foreground">
+                          <div className="flex items-center gap-2">
+                            {referral.uid}
+                            <Copy className="w-3 h-3 text-muted-foreground cursor-pointer hover:text-foreground" />
+                          </div>
+                          <div className="text-xs text-muted-foreground mt-1">
+                            Email: {referral.email}
+                          </div>
+                        </td>
                         <td className="px-4 py-3 text-sm text-foreground">{referral.registrationDate}</td>
-                        <td className="px-4 py-3 text-sm text-foreground">{referral.status}</td>
+                        <td className="px-4 py-3 text-sm text-foreground font-medium">{referral.referralCode}</td>
                         <td className="px-4 py-3 text-sm text-foreground">{referral.verificationDate}</td>
                         <td className="px-4 py-3 text-sm text-foreground">{referral.firstDeposit}</td>
-                        <td className="px-4 py-3 text-sm text-foreground">{referral.profitPoints}</td>
-                        <td className="px-4 py-3 text-sm text-foreground">{referral.commissionPoints}</td>
+                        <td className="px-4 py-3 text-sm text-foreground">{referral.firstTrade}</td>
+                        <td className="px-4 py-3 text-sm text-foreground">{referral.commission}</td>
                         <td className="px-4 py-3">
                           <Button
                             size="sm"
@@ -159,7 +276,7 @@ const Dashboard = () => {
                             onClick={() => setSelectedReferral(referral)}
                             className="h-8 w-8 p-0 hover:bg-accent"
                           >
-                            <Edit className="h-4 w-4" />
+                            <Settings className="h-4 w-4" />
                           </Button>
                         </td>
                       </tr>
@@ -177,35 +294,48 @@ const Dashboard = () => {
                   <thead className="bg-muted/50">
                     <tr>
                       <th className="px-4 py-3 text-left text-sm font-medium text-foreground">Referral Code</th>
-                      <th className="px-4 py-3 text-left text-sm font-medium text-foreground">Creation Date</th>
-                      <th className="px-4 py-3 text-left text-sm font-medium text-foreground">Status</th>
-                      <th className="px-4 py-3 text-left text-sm font-medium text-foreground">Total Referrals</th>
-                      <th className="px-4 py-3 text-left text-sm font-medium text-foreground">Total Commission</th>
-                      <th className="px-4 py-3 text-left text-sm font-medium text-foreground">Tracking Applications</th>
-                      <th className="px-4 py-3 text-left text-sm font-medium text-foreground">Total Commission Earned</th>
-                      <th className="px-4 py-3 text-left text-sm font-medium text-foreground">Acciones</th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-foreground">
+                        <div className="flex items-center gap-1">
+                          Creation Date 
+                          <ChevronDown className="w-3 h-3" />
+                        </div>
+                      </th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-foreground">Referrals</th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-foreground">First-level Value</th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-foreground">Total Commission (USD)</th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-foreground">
+                        <div className="flex items-center gap-1">
+                          Tracking Volume (USD) 
+                          <ChevronDown className="w-3 h-3" />
+                        </div>
+                      </th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-foreground">Split commission rate</th>
+                      <th className="px-4 py-3 text-left text-sm font-medium text-foreground">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {coupons.map((coupon, index) => (
+                    {referralCodes.map((code, index) => (
                       <tr
-                        key={coupon.code}
+                        key={code.code}
                         className={`border-t border-border hover:bg-muted/30 transition-colors ${
                           index % 2 === 0 ? "bg-card" : "bg-muted/10"
                         }`}
                       >
-                        <td className="px-4 py-3 text-sm text-foreground font-medium">{coupon.code}</td>
-                        <td className="px-4 py-3 text-sm text-foreground">{coupon.creationDate}</td>
-                        <td className="px-4 py-3 text-sm text-foreground">{coupon.status}</td>
-                        <td className="px-4 py-3 text-sm text-foreground">{coupon.totalReferrals}</td>
-                        <td className="px-4 py-3 text-sm text-foreground">{coupon.totalCommission}</td>
-                        <td className="px-4 py-3 text-sm text-foreground">{coupon.trackingApplications}</td>
-                        <td className="px-4 py-3 text-sm text-foreground">{coupon.totalCommissionEarned}</td>
+                        <td className="px-4 py-3 text-sm text-foreground">
+                          <div className="font-medium">{code.code}</div>
+                          <div className="text-xs text-muted-foreground">{code.description}</div>
+                        </td>
+                        <td className="px-4 py-3 text-sm text-foreground">{code.creationDate}</td>
+                        <td className="px-4 py-3 text-sm text-foreground">{code.referrals}</td>
+                        <td className="px-4 py-3 text-sm text-foreground">{code.firstLevelValue}</td>
+                        <td className="px-4 py-3 text-sm text-foreground">{code.totalCommission}</td>
+                        <td className="px-4 py-3 text-sm text-foreground">{code.trackingVolume}</td>
+                        <td className="px-4 py-3 text-sm text-foreground">{code.splitRate}</td>
                         <td className="px-4 py-3">
                           <Button
                             size="sm"
                             variant="ghost"
-                            onClick={() => setSelectedCoupon(coupon)}
+                            onClick={() => setSelectedCoupon(code)}
                             className="h-8 w-8 p-0 hover:bg-accent"
                           >
                             <Edit className="h-4 w-4" />
