@@ -36,6 +36,8 @@
   "no_data": "No hay datos",
   "loading": "Cargando...",
   "error_loading": "Error al cargar",
+  "login_subtitle": "Gestiona tus referidos de manera inteligente",
+  "email_placeholder": "tu@ejemplo.com",
   "create_coupon_modal_title": "CREAR CUPÓN",
   "edit_coupon_modal_title": "EDITAR CUPÓN",
   "view_referral_modal_title": "VER REFERIDO",

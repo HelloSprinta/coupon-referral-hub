@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { LanguageToggle } from "@/components/LanguageToggle";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 
@@ -24,15 +25,7 @@ const Login = () => {
     <div className="min-h-screen bg-background text-foreground flex items-center justify-center relative">
       <div className="absolute top-4 right-4 flex gap-2">
         <ThemeToggle />
-        <select
-          value={i18n.language}
-          onChange={e => i18n.changeLanguage(e.target.value)}
-          className="border border-border rounded-md px-2 py-1 bg-background text-foreground"
-          title={t('change_language')}
-        >
-          <option value="es">ES</option>
-          <option value="en">EN</option>
-        </select>
+        <LanguageToggle />
       </div>
       
       {/* Fondo decorativo con colores Sprinta */}
@@ -49,7 +42,7 @@ const Login = () => {
           </div>
           <div>
             <h1 className="text-3xl font-bold text-foreground">{t('welcome')}</h1>
-            <p className="text-muted-foreground mt-2">Gestiona tus referidos de manera inteligente</p>
+            <p className="text-muted-foreground mt-2">{t('login_subtitle')}</p>
           </div>
         </div>
         
@@ -63,7 +56,7 @@ const Login = () => {
               <Input
                 id="email"
                 type="email"
-                placeholder="tu@ejemplo.com"
+                placeholder={t('email_placeholder')}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="bg-input text-foreground border-border focus:ring-primary focus:border-primary"
@@ -93,18 +86,6 @@ const Login = () => {
               {t('login')}
             </Button>
           </form>
-        </div>
-
-        {/* Footer */}
-        <div className="text-center text-xs text-muted-foreground">
-          Al iniciar sesión, aceptas nuestros{" "}
-          <a href="#" className="text-primary hover:text-primary/80">
-            Términos de Servicio
-          </a>{" "}
-          y{" "}
-          <a href="#" className="text-primary hover:text-primary/80">
-            Política de Privacidad
-          </a>
         </div>
       </div>
     </div>

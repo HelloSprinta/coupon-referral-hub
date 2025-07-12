@@ -36,6 +36,8 @@
   "no_data": "No data",
   "loading": "Loading...",
   "error_loading": "Error loading",
+  "login_subtitle": "Manage your referrals smartly",
+  "email_placeholder": "your@email.com",
   "create_coupon_modal_title": "CREATE COUPON",
   "edit_coupon_modal_title": "EDIT COUPON",
   "view_referral_modal_title": "VIEW REFERRAL",
