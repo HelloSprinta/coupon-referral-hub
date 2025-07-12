@@ -4,11 +4,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,12 +22,21 @@ const Login = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground flex items-center justify-center relative">
-      <div className="absolute top-4 right-4">
+      <div className="absolute top-4 right-4 flex gap-2">
         <ThemeToggle />
+        <select
+          value={i18n.language}
+          onChange={e => i18n.changeLanguage(e.target.value)}
+          className="border border-border rounded-md px-2 py-1 bg-background text-foreground"
+          title={t('change_language')}
+        >
+          <option value="es">ES</option>
+          <option value="en">EN</option>
+        </select>
       </div>
       
       {/* Fondo decorativo con colores Sprinta */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-1/2 -right-1/2 w-full h-full bg-gradient-to-bl from-primary/5 to-transparent rounded-full"></div>
         <div className="absolute -bottom-1/2 -left-1/2 w-full h-full bg-gradient-to-tr from-secondary/10 to-transparent rounded-full"></div>
       </div>
@@ -37,7 +48,7 @@ const Login = () => {
             <img src="https://agents.sprinta.ai/sprinta-logo.svg" alt="Sprinta Logo" className="w-16 h-16 object-contain" />
           </div>
           <div>
-            <h1 className="text-3xl font-bold text-foreground">Sprinta Referidos</h1>
+            <h1 className="text-3xl font-bold text-foreground">{t('welcome')}</h1>
             <p className="text-muted-foreground mt-2">Gestiona tus referidos de manera inteligente</p>
           </div>
         </div>
@@ -47,7 +58,7 @@ const Login = () => {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
               <Label htmlFor="email" className="text-sm font-medium text-foreground">
-                Correo electrónico
+                {t('email')}
               </Label>
               <Input
                 id="email"
@@ -62,7 +73,7 @@ const Login = () => {
             
             <div className="space-y-2">
               <Label htmlFor="password" className="text-sm font-medium text-foreground">
-                Contraseña
+                {t('password')}
               </Label>
               <Input
                 id="password"
@@ -79,7 +90,7 @@ const Login = () => {
               type="submit"
               className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-medium py-2.5 rounded-lg transition-colors"
             >
-              Iniciar Sesión
+              {t('login')}
             </Button>
           </form>
         </div>

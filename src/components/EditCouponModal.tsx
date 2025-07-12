@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,6 +17,7 @@ interface EditCouponModalProps {
 }
 
 export function EditCouponModal({ coupon, onClose, onUpdateSuccess, onDeleteSuccess }: EditCouponModalProps) {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     code: "",
     description: "",
@@ -53,8 +55,8 @@ export function EditCouponModal({ coupon, onClose, onUpdateSuccess, onDeleteSucc
     // Validaciones
     if (!formData.code.trim()) {
       toast({
-        title: "Error",
-        description: "El código del cupón es requerido",
+        title: t("error"),
+        description: t("coupon_code_required"),
         variant: "destructive",
       });
       return;
@@ -63,8 +65,8 @@ export function EditCouponModal({ coupon, onClose, onUpdateSuccess, onDeleteSucc
     if (formData.startDate && formData.endDate && 
         new Date(formData.startDate) >= new Date(formData.endDate)) {
       toast({
-        title: "Error",
-        description: "La fecha de fin debe ser posterior a la fecha de inicio",
+        title: t("error"),
+        description: t("end_date_after_start"),
         variant: "destructive",
       });
       return;
@@ -94,15 +96,15 @@ export function EditCouponModal({ coupon, onClose, onUpdateSuccess, onDeleteSucc
       }
 
       toast({
-        title: "¡Cupón actualizado exitosamente!",
-        description: `El cupón ${formData.code} ha sido actualizado`,
+        title: t("coupon_updated_success"),
+        description: t("coupon_updated", { code: formData.code }),
       });
 
       onClose();
     } catch (error) {
       toast({
-        title: "Error",
-        description: "No se pudo actualizar el cupón. Intenta nuevamente.",
+        title: t("error"),
+        description: t("coupon_update_failed"),
         variant: "destructive",
       });
     } finally {
@@ -122,15 +124,15 @@ export function EditCouponModal({ coupon, onClose, onUpdateSuccess, onDeleteSucc
       }
 
       toast({
-        title: "Cupón eliminado",
-        description: `El cupón ${coupon.code} ha sido eliminado`,
+        title: t("coupon_deleted"),
+        description: t("coupon_deleted_desc", { code: coupon.code }),
       });
 
       onClose();
     } catch (error) {
       toast({
-        title: "Error",
-        description: "No se pudo eliminar el cupón. Intenta nuevamente.",
+        title: t("error"),
+        description: t("coupon_delete_failed"),
         variant: "destructive",
       });
     } finally {
@@ -153,7 +155,7 @@ export function EditCouponModal({ coupon, onClose, onUpdateSuccess, onDeleteSucc
         <div className="bg-primary text-primary-foreground px-6 py-4 rounded-t-lg">
           <div className="flex items-center justify-between">
             <DialogTitle className="text-lg font-bold tracking-wide">
-              EDITAR CUPÓN
+              {t("edit_coupon_modal_title")}
             </DialogTitle>
             <Button
               variant="ghost"
@@ -173,10 +175,10 @@ export function EditCouponModal({ coupon, onClose, onUpdateSuccess, onDeleteSucc
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-destructive">
-                  ¿Estás seguro de eliminar este cupón?
+                  {t("delete_coupon_confirm")}
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  Esta acción no se puede deshacer
+                  {t("delete_coupon_warning")}
                 </p>
               </div>
               <div className="flex gap-2">
@@ -186,7 +188,7 @@ export function EditCouponModal({ coupon, onClose, onUpdateSuccess, onDeleteSucc
                   onClick={() => setShowDeleteConfirm(false)}
                   disabled={isLoading}
                 >
-                  Cancelar
+                  {t("cancel")}
                 </Button>
                 <Button
                   variant="destructive"
@@ -194,7 +196,7 @@ export function EditCouponModal({ coupon, onClose, onUpdateSuccess, onDeleteSucc
                   onClick={handleDelete}
                   disabled={isLoading}
                 >
-                  {isLoading ? "Eliminando..." : "Eliminar"}
+                  {isLoading ? t("deleting") : t("delete")}
                 </Button>
               </div>
             </div>
@@ -206,14 +208,14 @@ export function EditCouponModal({ coupon, onClose, onUpdateSuccess, onDeleteSucc
           {/* Código del cupón */}
           <div className="space-y-3">
             <Label htmlFor="code" className="text-sm font-semibold text-foreground uppercase tracking-wide">
-              Código del cupón
+              {t("coupon_code")}
             </Label>
             <Input
               id="code"
               value={formData.code}
               onChange={(e) => setFormData({ ...formData, code: e.target.value.toUpperCase() })}
               className="bg-input text-foreground border-border h-11 rounded-lg focus:ring-primary focus:border-primary transition-all"
-              placeholder="Código del cupón"
+              placeholder={t("coupon_code_placeholder")}
               disabled={isLoading}
             />
           </div>
@@ -221,14 +223,14 @@ export function EditCouponModal({ coupon, onClose, onUpdateSuccess, onDeleteSucc
           {/* Descripción */}
           <div className="space-y-3">
             <Label htmlFor="description" className="text-sm font-semibold text-foreground uppercase tracking-wide">
-              Descripción
+              {t("description")}
             </Label>
             <Input
               id="description"
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
               className="bg-input text-foreground border-border h-11 rounded-lg focus:ring-primary focus:border-primary transition-all"
-              placeholder="Descripción del cupón"
+              placeholder={t("description_placeholder")}
               disabled={isLoading}
             />
           </div>
@@ -237,7 +239,7 @@ export function EditCouponModal({ coupon, onClose, onUpdateSuccess, onDeleteSucc
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-3">
               <Label htmlFor="startDate" className="text-sm font-semibold text-foreground uppercase tracking-wide">
-                Fecha de inicio
+                {t("start_date_label")}
               </Label>
               <Input
                 id="startDate"
@@ -251,7 +253,7 @@ export function EditCouponModal({ coupon, onClose, onUpdateSuccess, onDeleteSucc
             
             <div className="space-y-3">
               <Label htmlFor="endDate" className="text-sm font-semibold text-foreground uppercase tracking-wide">
-                Fecha de fin
+                {t("end_date_label")}
               </Label>
               <Input
                 id="endDate"
@@ -267,7 +269,7 @@ export function EditCouponModal({ coupon, onClose, onUpdateSuccess, onDeleteSucc
           {/* Beneficio referidor */}
           <div className="space-y-3">
             <Label className="text-sm font-semibold text-foreground uppercase tracking-wide">
-              Beneficio referidor
+              {t("referrer_benefit")}
             </Label>
             <Select
               value={formData.beneficioReferidor}
@@ -275,7 +277,7 @@ export function EditCouponModal({ coupon, onClose, onUpdateSuccess, onDeleteSucc
               disabled={isLoading}
             >
               <SelectTrigger className="bg-input text-foreground border-border h-11 rounded-lg focus:ring-primary focus:border-primary transition-all">
-                <SelectValue />
+              <SelectValue placeholder={t("select_benefit")}/>
               </SelectTrigger>
               <SelectContent className="bg-popover border-border rounded-lg">
                 <SelectItem value="TOKENS + COMISIÓN DEL 20%">TOKENS + COMISIÓN DEL 20%</SelectItem>
@@ -288,7 +290,7 @@ export function EditCouponModal({ coupon, onClose, onUpdateSuccess, onDeleteSucc
           {/* Beneficio referido */}
           <div className="space-y-3">
             <Label className="text-sm font-semibold text-foreground uppercase tracking-wide">
-              Beneficio referido
+              {t("referred_benefit")}
             </Label>
             <Select
               value={formData.beneficioReferido}
@@ -296,7 +298,7 @@ export function EditCouponModal({ coupon, onClose, onUpdateSuccess, onDeleteSucc
               disabled={isLoading}
             >
               <SelectTrigger className="bg-input text-foreground border-border h-11 rounded-lg focus:ring-primary focus:border-primary transition-all">
-                <SelectValue />
+              <SelectValue placeholder={t("select_benefit")}/>
               </SelectTrigger>
               <SelectContent className="bg-popover border-border rounded-lg">
                 <SelectItem value="1ER MES GRATIS">1ER MES GRATIS</SelectItem>
@@ -310,7 +312,7 @@ export function EditCouponModal({ coupon, onClose, onUpdateSuccess, onDeleteSucc
           {/* Plan de suscripción */}
           <div className="space-y-3">
             <Label className="text-sm font-semibold text-foreground uppercase tracking-wide">
-              Plan de suscripción
+              {t("subscription_plan")}
             </Label>
             <Select
               value={formData.planSuscripcion}
@@ -318,13 +320,13 @@ export function EditCouponModal({ coupon, onClose, onUpdateSuccess, onDeleteSucc
               disabled={isLoading}
             >
               <SelectTrigger className="bg-input text-foreground border-border h-11 rounded-lg focus:ring-primary focus:border-primary transition-all">
-                <SelectValue />
+              <SelectValue placeholder={t("select_plan")}/>
               </SelectTrigger>
               <SelectContent className="bg-popover border-border rounded-lg">
-                <SelectItem value="Basic">Basic</SelectItem>
-                <SelectItem value="Premium">Premium</SelectItem>
-                <SelectItem value="Professional">Professional</SelectItem>
-                <SelectItem value="Enterprise">Enterprise</SelectItem>
+                <SelectItem value="Basic">{t("basic")}</SelectItem>
+                <SelectItem value="Premium">{t("premium")}</SelectItem>
+                <SelectItem value="Professional">{t("professional")}</SelectItem>
+                <SelectItem value="Enterprise">{t("enterprise")}</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -333,10 +335,10 @@ export function EditCouponModal({ coupon, onClose, onUpdateSuccess, onDeleteSucc
           <div className="flex items-center justify-between p-4 bg-muted/30 rounded-lg">
             <div className="space-y-0.5">
               <Label className="text-sm font-semibold text-foreground">
-                Cupón activo
+                {t("active_coupon")}
               </Label>
               <p className="text-xs text-muted-foreground">
-                Desactiva el cupón para que no pueda ser utilizado
+                {t("deactivate_coupon")}
               </p>
             </div>
             <Switch
@@ -354,7 +356,7 @@ export function EditCouponModal({ coupon, onClose, onUpdateSuccess, onDeleteSucc
             className="w-full bg-primary text-primary-foreground hover:bg-primary/90 h-12 rounded-lg font-semibold text-base transition-all transform hover:scale-[1.02] active:scale-[0.98]"
             disabled={isLoading}
           >
-            {isLoading ? "Guardando..." : "Guardar"}
+            {isLoading ? t("saving") : t("save")}
           </Button>
         </div>
       </DialogContent>

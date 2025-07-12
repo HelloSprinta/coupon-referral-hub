@@ -1,4 +1,5 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,6 +10,7 @@ interface ViewReferralModalProps {
 }
 
 export function ViewReferralModal({ referral, onClose }: ViewReferralModalProps) {
+  const { t } = useTranslation();
   if (!referral) return null;
 
   return (
@@ -17,16 +19,15 @@ export function ViewReferralModal({ referral, onClose }: ViewReferralModalProps)
         {/* Header con estilo personalizado */}
         <div className="bg-primary text-primary-foreground px-6 py-4 rounded-t-lg">
           <DialogTitle className="text-lg font-bold tracking-wide">
-            VER REFERIDO
+            {t("view_referral_modal_title")}
           </DialogTitle>
         </div>
-        
         {/* Body del modal */}
         <div className="px-6 py-6 space-y-5">
           {/* Nombre */}
           <div className="space-y-3">
             <Label htmlFor="nombre" className="text-sm font-semibold text-foreground uppercase tracking-wide">
-              Nombre
+              {t("coupon_name")}
             </Label>
             <Input
               id="nombre"
@@ -35,7 +36,6 @@ export function ViewReferralModal({ referral, onClose }: ViewReferralModalProps)
               className="bg-input text-foreground border-border h-11 rounded-lg"
             />
           </div>
-          
           {/* Gmail */}
           <div className="space-y-3">
             <Label htmlFor="gmail" className="text-sm font-semibold text-foreground uppercase tracking-wide">
@@ -48,11 +48,10 @@ export function ViewReferralModal({ referral, onClose }: ViewReferralModalProps)
               className="bg-input text-foreground border-border h-11 rounded-lg"
             />
           </div>
-          
           {/* Cupón */}
           <div className="space-y-3">
             <Label htmlFor="cupon" className="text-sm font-semibold text-foreground uppercase tracking-wide">
-              Cupón
+              {t("coupon_code")}
             </Label>
             <Input
               id="cupon"
@@ -61,28 +60,26 @@ export function ViewReferralModal({ referral, onClose }: ViewReferralModalProps)
               className="bg-input text-foreground border-border h-11 rounded-lg font-mono"
             />
           </div>
-          
           {/* Plan actual */}
           <div className="space-y-3">
             <Label htmlFor="plan" className="text-sm font-semibold text-foreground uppercase tracking-wide">
-              Plan actual
+              {t("current_plan")}
             </Label>
             <Input
               id="plan"
-              value={referral.commission !== "-" ? "Premium" : "Basic"}
+              value={referral.commission !== "-" ? t("premium") : t("basic")}
               readOnly
               className="bg-input text-foreground border-border h-11 rounded-lg"
             />
           </div>
         </div>
-        
         {/* Footer con botón */}
         <div className="px-6 pb-6">
           <Button
             onClick={onClose}
             className="w-full bg-primary text-primary-foreground hover:bg-primary/90 h-12 rounded-lg font-semibold text-base transition-all transform hover:scale-[1.02] active:scale-[0.98]"
           >
-            Guardar
+            {t("save")}
           </Button>
         </div>
       </DialogContent>

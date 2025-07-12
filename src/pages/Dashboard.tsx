@@ -1,16 +1,19 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Edit, LogOut, Plus, Search, ChevronDown, Copy, Settings, Calendar } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { LanguageToggle } from "@/components/LanguageToggle";
 import { useNavigate } from "react-router-dom";
 import { ViewReferralModal } from "@/components/ViewReferralModal";
 import { EditCouponModal } from "@/components/EditCouponModal";
 import { CreateCouponModal } from "@/components/CreateCouponModal";
 
 const Dashboard = () => {
+  const { t } = useTranslation();
   const [selectedReferral, setSelectedReferral] = useState<any>(null);
   const [selectedCoupon, setSelectedCoupon] = useState<any>(null);
   const [showCreateCoupon, setShowCreateCoupon] = useState(false);
@@ -151,16 +154,19 @@ const Dashboard = () => {
       {/* Header con colores Sprinta */}
       <header className="bg-card border-b border-border px-6 py-4">
         <div className="flex items-center justify-between">
-          <h1 className="text-xl font-semibold text-foreground">Dashboard</h1>
+          <div className="flex items-center gap-3">
+            <img src="https://agents.sprinta.ai/sprinta-logo.svg" alt="Sprinta Logo" className="w-8 h-8 object-contain" />
+            <h1 className="text-xl font-semibold text-foreground">{t("dashboard")}</h1>
+          </div>
           <div className="flex items-center space-x-4">
             <ThemeToggle />
+            <LanguageToggle />
             <Button
               onClick={handleLogout}
               variant="outline"
               className="border-border text-foreground hover:bg-accent"
             >
-              <LogOut className="w-4 h-4 mr-2" />
-              LOGOUT
+              <LogOut className="w-4 h-4 mr-2" /> {t("logout")}
             </Button>
           </div>
         </div>
@@ -175,13 +181,13 @@ const Dashboard = () => {
                 value="referidos" 
                 className="bg-transparent border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent rounded-none px-6 py-3 text-muted-foreground data-[state=active]:text-foreground"
               >
-                Referidos
+                {t("tab_referrals")}
               </TabsTrigger>
               <TabsTrigger 
                 value="cupones" 
                 className="bg-transparent border-b-2 border-transparent data-[state=active]:border-primary data-[state=active]:bg-transparent rounded-none px-6 py-3 text-muted-foreground data-[state=active]:text-foreground"
               >
-                Código de referidos
+                {t("tab_referral_codes")}
               </TabsTrigger>
             </TabsList>
           </div>
@@ -194,13 +200,13 @@ const Dashboard = () => {
                 className="bg-primary text-primary-foreground hover:bg-primary/90 font-medium"
               >
                 <Plus className="w-4 h-4 mr-2" />
-                Create Referral Code
+                {t("create_referral_code")}
               </Button>
               
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
                 <Input
-                  placeholder="Search by Code or Note"
+                  placeholder={t("search_placeholder")}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="pl-10 bg-input border-border text-foreground placeholder-muted-foreground w-64"
@@ -209,10 +215,10 @@ const Dashboard = () => {
 
               <Select value={accountFilter} onValueChange={setAccountFilter}>
                 <SelectTrigger className="w-40 bg-input border-border text-foreground">
-                  <SelectValue placeholder="All Accounts" />
+                  <SelectValue placeholder={t("all_accounts")} />
                 </SelectTrigger>
                 <SelectContent className="bg-popover border-border">
-                  <SelectItem value="All Accounts">All Accounts</SelectItem>
+                  <SelectItem value="All Accounts">{t("all_accounts")}</SelectItem>
                   <SelectItem value="Active">Active</SelectItem>
                   <SelectItem value="Inactive">Inactive</SelectItem>
                 </SelectContent>
@@ -253,34 +259,34 @@ const Dashboard = () => {
                     </th>
                     <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">
                       <div className="flex items-center gap-1">
-                        Registration Date 
+                        {t("registration_date")} 
                         <ChevronDown className="w-3 h-3" />
                       </div>
                     </th>
                     <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">
-                      Referral Code
+                      {t("referral_code")}
                     </th>
                     <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">
                       <div className="flex items-center gap-1">
-                        Verification Date 
-                        <ChevronDown className="w-3 h-3" />
-                      </div>
-                    </th>
-                    <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">
-                      <div className="flex items-center gap-1">
-                        First Deposit Date 
+                        {t("verification_date")} 
                         <ChevronDown className="w-3 h-3" />
                       </div>
                     </th>
                     <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">
                       <div className="flex items-center gap-1">
-                        First Trade Date 
+                        {t("first_deposit")} 
                         <ChevronDown className="w-3 h-3" />
                       </div>
                     </th>
                     <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">
                       <div className="flex items-center gap-1">
-                        Commission (USD) 
+                        {t("first_trade")} 
+                        <ChevronDown className="w-3 h-3" />
+                      </div>
+                    </th>
+                    <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">
+                      <div className="flex items-center gap-1">
+                        {t("commission")} (USD)
                         <ChevronDown className="w-3 h-3" />
                       </div>
                     </th>
@@ -299,7 +305,7 @@ const Dashboard = () => {
                           <Copy className="w-3 h-3 text-muted-foreground cursor-pointer hover:text-foreground" />
                         </div>
                         <div className="text-xs text-muted-foreground mt-1">
-                          Email {referral.email}
+                          {t("email")} {referral.email}
                         </div>
                       </td>
                       <td className="px-4 py-3 text-sm text-foreground">{referral.registrationDate}</td>
@@ -330,16 +336,16 @@ const Dashboard = () => {
               <table className="w-full">
                 <thead className="bg-muted/50">
                   <tr className="border-b border-border">
-                    <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">Referral Code</th>
+                    <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">{t("referral_code")}</th>
                     <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">
                       <div className="flex items-center gap-1">
-                        Creation Date 
+                        {t("registration_date")} 
                         <ChevronDown className="w-3 h-3" />
                       </div>
                     </th>
                     <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">
                       <div className="flex items-center gap-1">
-                        Referrals 
+                        {t("referrals")} 
                         <ChevronDown className="w-3 h-3" />
                       </div>
                     </th>
@@ -348,7 +354,7 @@ const Dashboard = () => {
                       <ChevronDown className="w-3 h-3" />
                     </th>
                     <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">
-                      Total Commission (USD) 
+                      {t("commission")} (USD)
                       <ChevronDown className="w-3 h-3" />
                     </th>
                     <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">
@@ -374,7 +380,7 @@ const Dashboard = () => {
                           <span className="text-foreground font-medium">{code.code}</span>
                           {code.status === "Default" && (
                             <span className="px-2 py-1 bg-primary text-primary-foreground text-xs rounded font-medium">
-                              Default
+                              {t("default")}
                             </span>
                           )}
                           <Copy className="w-3 h-3 text-muted-foreground cursor-pointer hover:text-foreground" />

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,6 +14,7 @@ interface CreateCouponModalProps {
 }
 
 export function CreateCouponModal({ open, onClose, onCreateSuccess }: CreateCouponModalProps) {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     nombre: "",
     fechaInicio: "",
@@ -28,8 +30,8 @@ export function CreateCouponModal({ open, onClose, onCreateSuccess }: CreateCoup
     // Validaciones
     if (!formData.nombre.trim()) {
       toast({
-        title: "Error",
-        description: "El nombre del cupón es requerido",
+        title: t("error"),
+        description: t("coupon_name_required"),
         variant: "destructive",
       });
       return;
@@ -37,8 +39,8 @@ export function CreateCouponModal({ open, onClose, onCreateSuccess }: CreateCoup
 
     if (!formData.fechaInicio || !formData.fechaFin) {
       toast({
-        title: "Error",
-        description: "Las fechas de inicio y fin son requeridas",
+        title: t("error"),
+        description: t("dates_required"),
         variant: "destructive",
       });
       return;
@@ -46,8 +48,8 @@ export function CreateCouponModal({ open, onClose, onCreateSuccess }: CreateCoup
 
     if (new Date(formData.fechaInicio) >= new Date(formData.fechaFin)) {
       toast({
-        title: "Error",
-        description: "La fecha de fin debe ser posterior a la fecha de inicio",
+        title: t("error"),
+        description: t("end_date_after_start"),
         variant: "destructive",
       });
       return;
@@ -55,8 +57,8 @@ export function CreateCouponModal({ open, onClose, onCreateSuccess }: CreateCoup
 
     if (!formData.beneficioReferidor || !formData.beneficioReferido || !formData.planSuscripcion) {
       toast({
-        title: "Error",
-        description: "Todos los campos son requeridos",
+        title: t("error"),
+        description: t("all_fields_required"),
         variant: "destructive",
       });
       return;
@@ -96,8 +98,8 @@ export function CreateCouponModal({ open, onClose, onCreateSuccess }: CreateCoup
       }
 
       toast({
-        title: "¡Cupón creado exitosamente!",
-        description: `El cupón ${generatedCode} ha sido creado`,
+        title: t("coupon_created_success"),
+        description: t("coupon_created", { code: generatedCode }),
       });
 
       // Reset form
@@ -113,8 +115,8 @@ export function CreateCouponModal({ open, onClose, onCreateSuccess }: CreateCoup
       onClose();
     } catch (error) {
       toast({
-        title: "Error",
-        description: "No se pudo crear el cupón. Intenta nuevamente.",
+        title: t("error"),
+        description: t("coupon_create_failed"),
         variant: "destructive",
       });
     } finally {
@@ -142,32 +144,30 @@ export function CreateCouponModal({ open, onClose, onCreateSuccess }: CreateCoup
         {/* Header con estilo personalizado */}
         <div className="bg-primary text-primary-foreground px-6 py-4 rounded-t-lg">
           <DialogTitle className="text-lg font-bold tracking-wide">
-            CREAR CUPÓN
+            {t("create_coupon_modal_title")}
           </DialogTitle>
         </div>
-        
         {/* Body del modal */}
         <div className="px-6 py-6 space-y-6">
           {/* Nombre */}
           <div className="space-y-3">
             <Label htmlFor="nombre" className="text-sm font-semibold text-foreground uppercase tracking-wide">
-              Nombre
+              {t("coupon_name")}
             </Label>
             <Input
               id="nombre"
               value={formData.nombre}
               onChange={(e) => setFormData({ ...formData, nombre: e.target.value })}
               className="bg-input text-foreground border-border h-11 rounded-lg focus:ring-primary focus:border-primary transition-all"
-              placeholder="Ingresa el nombre del cupón"
+              placeholder={t("coupon_name_placeholder")}
               disabled={isLoading}
             />
           </div>
-          
           {/* Fechas */}
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-3">
               <Label htmlFor="fechaInicio" className="text-sm font-semibold text-foreground uppercase tracking-wide">
-                Fecha de inicio
+                {t("start_date_label")}
               </Label>
               <Input
                 id="fechaInicio"
@@ -178,10 +178,9 @@ export function CreateCouponModal({ open, onClose, onCreateSuccess }: CreateCoup
                 disabled={isLoading}
               />
             </div>
-            
             <div className="space-y-3">
               <Label htmlFor="fechaFin" className="text-sm font-semibold text-foreground uppercase tracking-wide">
-                Fecha de fin
+                {t("end_date_label")}
               </Label>
               <Input
                 id="fechaFin"
@@ -193,11 +192,10 @@ export function CreateCouponModal({ open, onClose, onCreateSuccess }: CreateCoup
               />
             </div>
           </div>
-          
           {/* Beneficio referidor */}
           <div className="space-y-3">
             <Label className="text-sm font-semibold text-foreground uppercase tracking-wide">
-              Beneficio referidor
+              {t("referrer_benefit")}
             </Label>
             <Select
               value={formData.beneficioReferidor}
@@ -205,7 +203,7 @@ export function CreateCouponModal({ open, onClose, onCreateSuccess }: CreateCoup
               disabled={isLoading}
             >
               <SelectTrigger className="bg-input text-foreground border-border h-11 rounded-lg focus:ring-primary focus:border-primary transition-all">
-                <SelectValue placeholder="Seleccionar beneficio" />
+                <SelectValue placeholder={t("select_benefit")}/>
               </SelectTrigger>
               <SelectContent className="bg-popover border-border rounded-lg">
                 <SelectItem value="TOKENS + COMISIÓN DEL 20%">TOKENS + COMISIÓN DEL 20%</SelectItem>
@@ -214,11 +212,10 @@ export function CreateCouponModal({ open, onClose, onCreateSuccess }: CreateCoup
               </SelectContent>
             </Select>
           </div>
-          
           {/* Beneficio referido */}
           <div className="space-y-3">
             <Label className="text-sm font-semibold text-foreground uppercase tracking-wide">
-              Beneficio referido
+              {t("referred_benefit")}
             </Label>
             <Select
               value={formData.beneficioReferido}
@@ -226,7 +223,7 @@ export function CreateCouponModal({ open, onClose, onCreateSuccess }: CreateCoup
               disabled={isLoading}
             >
               <SelectTrigger className="bg-input text-foreground border-border h-11 rounded-lg focus:ring-primary focus:border-primary transition-all">
-                <SelectValue placeholder="Seleccionar beneficio" />
+                <SelectValue placeholder={t("select_benefit")}/>
               </SelectTrigger>
               <SelectContent className="bg-popover border-border rounded-lg">
                 <SelectItem value="1ER MES GRATIS">1ER MES GRATIS</SelectItem>
@@ -236,11 +233,10 @@ export function CreateCouponModal({ open, onClose, onCreateSuccess }: CreateCoup
               </SelectContent>
             </Select>
           </div>
-          
           {/* Plan de suscripción */}
           <div className="space-y-3">
             <Label className="text-sm font-semibold text-foreground uppercase tracking-wide">
-              Plan de suscripción
+              {t("subscription_plan")}
             </Label>
             <Select
               value={formData.planSuscripcion}
@@ -248,18 +244,17 @@ export function CreateCouponModal({ open, onClose, onCreateSuccess }: CreateCoup
               disabled={isLoading}
             >
               <SelectTrigger className="bg-input text-foreground border-border h-11 rounded-lg focus:ring-primary focus:border-primary transition-all">
-                <SelectValue placeholder="Seleccionar plan" />
+                <SelectValue placeholder={t("select_plan")}/>
               </SelectTrigger>
               <SelectContent className="bg-popover border-border rounded-lg">
-                <SelectItem value="Basic">Basic</SelectItem>
-                <SelectItem value="Premium">Premium</SelectItem>
-                <SelectItem value="Professional">Professional</SelectItem>
-                <SelectItem value="Enterprise">Enterprise</SelectItem>
+                <SelectItem value="Basic">{t("basic")}</SelectItem>
+                <SelectItem value="Premium">{t("premium")}</SelectItem>
+                <SelectItem value="Professional">{t("professional")}</SelectItem>
+                <SelectItem value="Enterprise">{t("enterprise")}</SelectItem>
               </SelectContent>
             </Select>
           </div>
         </div>
-        
         {/* Footer con botón */}
         <div className="px-6 pb-6">
           <Button
@@ -267,7 +262,7 @@ export function CreateCouponModal({ open, onClose, onCreateSuccess }: CreateCoup
             className="w-full bg-primary text-primary-foreground hover:bg-primary/90 h-12 rounded-lg font-semibold text-base transition-all transform hover:scale-[1.02] active:scale-[0.98]"
             disabled={isLoading}
           >
-            {isLoading ? "Creando..." : "Crear"}
+            {isLoading ? t("creating") : t("create")}
           </Button>
         </div>
       </DialogContent>
