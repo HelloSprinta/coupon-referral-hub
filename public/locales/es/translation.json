@@ -1,3 +1,4 @@
+
 {
   "welcome": "Bienvenido a Sprinta Referidos",
   "login": "Iniciar sesión",
@@ -67,5 +68,28 @@
   "coupon_code_placeholder": "Código del cupón",
   "description": "Descripción",
   "description_placeholder": "Descripción del cupón",
-  "current_plan": "Plan actual"
+  "current_plan": "Plan actual",
+  "error": "Error",
+  "coupon_name_required": "El nombre del cupón es requerido",
+  "dates_required": "Las fechas son requeridas",
+  "end_date_after_start": "La fecha de fin debe ser posterior a la fecha de inicio",
+  "all_fields_required": "Todos los campos son requeridos",
+  "coupon_created_success": "Cupón creado exitosamente",
+  "coupon_created": "Cupón {{code}} creado correctamente",
+  "coupon_create_failed": "Error al crear el cupón",
+  "coupon_code_required": "El código del cupón es requerido",
+  "coupon_updated_success": "Cupón actualizado exitosamente",
+  "coupon_updated": "Cupón {{code}} actualizado correctamente",
+  "coupon_update_failed": "Error al actualizar el cupón",
+  "delete_coupon_confirm": "¿Eliminar cupón?",
+  "delete_coupon_warning": "Esta acción no se puede deshacer",
+  "coupon_deleted": "Cupón eliminado",
+  "coupon_deleted_desc": "El cupón {{code}} ha sido eliminado",
+  "coupon_delete_failed": "Error al eliminar el cupón",
+  "metrics_total_money": "Dinero Total Generado",
+  "metrics_money_this_month": "Dinero Este Mes",
+  "metrics_vs_may": "vs Mayo",
+  "metrics_total_users": "Usuarios Total",
+  "metrics_growth": "Crecimiento",
+  "metrics_users_this_month": "Usuarios Este Mes"
 }
