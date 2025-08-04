@@ -13,6 +13,7 @@ export interface Coupon {
     };
     days_validity_free?: number;
     days_validity_card?: number;
+    channel?: string; // Channel ID for filtering
 }
 
 export interface CouponFormData {
@@ -24,6 +25,7 @@ export interface CouponFormData {
     organization_id?: string;
     days_validity_free?: number;
     days_validity_card?: number;
+    channel?: string;
 }
 
 export interface CouponFilters {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Search, Filter, Calendar } from 'lucide-react';
+import { CHANNELS } from '@/config/channels';
 
 interface CouponsFiltersProps {
     filters: any;
@@ -44,17 +45,19 @@ export const CouponsFilters: React.FC<CouponsFiltersProps> = ({
                 {/* Canal */}
                 <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Canal
+                        Canal de Difusión
                     </label>
                     <select
                         value={filters.canal}
                         onChange={(e) => updateFilter('canal', e.target.value)}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                     >
-                        <option value="todos">Todos</option>
-                        <option value="instagram">Instagram</option>
-                        <option value="whatsapp">WhatsApp</option>
-                        <option value="email">Email</option>
+                        <option value="todos">Todos los canales</option>
+                        {CHANNELS.map((channel) => (
+                            <option key={channel.id} value={channel.id}>
+                                {channel.name}
+                            </option>
+                        ))}
                     </select>
                 </div>
 

@@ -50,6 +50,11 @@ export default function CuponesPage() {
                 return false;
             }
 
+            // Filtro de canal
+            if (filters.canal !== 'todos' && coupon.channel !== filters.canal) {
+                return false;
+            }
+
             // Filtro de estado
             if (filters.estado !== 'todos') {
                 const now = new Date();
@@ -58,6 +63,19 @@ export default function CuponesPage() {
 
                 if (filters.estado === 'activo' && isExpired) return false;
                 if (filters.estado === 'expirado' && !isExpired) return false;
+            }
+
+            // Filtro de fechas
+            if (filters.rangoFechas.start && coupon.start_date) {
+                const startDate = new Date(coupon.start_date);
+                const filterStart = new Date(filters.rangoFechas.start);
+                if (startDate < filterStart) return false;
+            }
+
+            if (filters.rangoFechas.end && coupon.end_date) {
+                const endDate = new Date(coupon.end_date);
+                const filterEnd = new Date(filters.rangoFechas.end);
+                if (endDate > filterEnd) return false;
             }
 
             return true;
