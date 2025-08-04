@@ -78,7 +78,10 @@ export const useCoupons = () => {
             // Simulate revenue based on discount percentage and usage
             const baseRevenue = coupon.discount_percentage ? coupon.discount_percentage * 10 : 50;
             return sum + baseRevenue + Math.floor(Math.random() * 100);
-        }, 0)
+        }, 0),
+        freeUsers: 4, // Simulated data - replace with real data
+        paidUsers: 2, // Simulated data - replace with real data
+        conversionRate: 50 // Simulated data - replace with real data
     };
 
     return {

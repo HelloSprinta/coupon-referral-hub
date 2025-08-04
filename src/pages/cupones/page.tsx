@@ -1,17 +1,21 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { CouponsStats } from '@/components/cupones/CouponsStats';
-import { CouponsTabs } from '@/components/cupones/CouponsTabs';
+import { useOutletContext } from 'react-router-dom';
 import { PopularCoupons } from '@/components/cupones/PopularCoupons';
 import { CouponsFilters } from '@/components/cupones/CouponsFilters';
 import { CouponsTable } from '@/components/cupones/CouponsTable';
 import { CreateCouponModal } from '@/components/cupones/CreateCouponModal';
+import { ReferralsList } from '@/components/referrals/ReferralsList';
+import { DashboardContent } from '@/components/dashboard/DashboardContent';
 import { useCoupons } from '@/hooks/useCoupons';
+
+interface OutletContext {
+    activeTab: string;
+}
 
 export default function CuponesPage() {
     const [showCreateModal, setShowCreateModal] = useState(false);
-    const [activeTab, setActiveTab] = useState('cupones');
     const [filters, setFilters] = useState({
         search: '',
         canal: 'todos',
@@ -21,10 +25,11 @@ export default function CuponesPage() {
         estado: 'todos'
     });
 
+    const { activeTab } = useOutletContext<OutletContext>();
+
     const {
         coupons,
         loading,
-        stats,
         fetchCoupons,
         createCoupon,
         error
@@ -32,7 +37,7 @@ export default function CuponesPage() {
 
     useEffect(() => {
         fetchCoupons();
-    }, []);
+    }, [fetchCoupons]);
 
     const handleCreateCoupon = async (couponData: any) => {
         const success = await createCoupon(couponData);
@@ -81,20 +86,11 @@ export default function CuponesPage() {
         });
     }, [coupons, filters]);
 
-    return (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                {/* Stats con Ranking */}
-                <CouponsStats stats={stats} loading={loading} />
-
-
-                {/* Pestañas de navegación */}
-                <CouponsTabs 
-                    activeTab={activeTab} 
-                    onTabChange={setActiveTab} 
-                />
-
-                {/* Contenido condicional según la pestaña activa */}
-                {activeTab === 'cupones' && (
+    // Renderizar contenido según la pestaña activa
+    const renderTabContent = () => {
+        switch (activeTab) {
+            case 'cupones':
+                return (
                     <>
                         {/* Sección Más Populares */}
                         <PopularCoupons onCreateClick={() => setShowCreateModal(true)} />
@@ -120,44 +116,51 @@ export default function CuponesPage() {
                             onRefresh={fetchCoupons}
                         />
                     </>
-                )}
+                );
 
-                {/* Placeholders para otras pestañas */}
-                {activeTab === 'sprinter' && (
-                    <div className="bg-white rounded-lg shadow-sm p-8 text-center">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-2">Sprinter</h3>
-                        <p className="text-gray-600">Contenido de Sprinter próximamente</p>
-                    </div>
-                )}
+            case 'sprinter':
+                return <DashboardContent />;
 
-                {activeTab === 'referidos' && (
-                    <div className="bg-white rounded-lg shadow-sm p-8 text-center">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-2">Referidos</h3>
-                        <p className="text-gray-600">Contenido de Referidos próximamente</p>
-                    </div>
-                )}
+            case 'referidos':
+                return <ReferralsList />;
 
-                {activeTab === 'retiros' && (
+            case 'retiros':
+                return (
                     <div className="bg-white rounded-lg shadow-sm p-8 text-center">
                         <h3 className="text-lg font-semibold text-gray-900 mb-2">Retiros y Pagos</h3>
                         <p className="text-gray-600">Contenido de Retiros y Pagos próximamente</p>
                     </div>
-                )}
+                );
 
-                {activeTab === 'analisis' && (
+            case 'analisis':
+                return (
                     <div className="bg-white rounded-lg shadow-sm p-8 text-center">
                         <h3 className="text-lg font-semibold text-gray-900 mb-2">Análisis y Seguimiento</h3>
                         <p className="text-gray-600">Contenido de Análisis y Seguimiento próximamente</p>
                     </div>
-                )}
+                );
 
-                {/* Modal de creación */}
-                {showCreateModal && (
-                    <CreateCouponModal
-                        onClose={() => setShowCreateModal(false)}
-                        onSubmit={handleCreateCoupon}
-                    />
-                )}
-        </div>
+            default:
+                return (
+                    <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-2">Selecciona una pestaña</h3>
+                        <p className="text-gray-600">El contenido se mostrará aquí</p>
+                    </div>
+                );
+        }
+    };
+
+    return (
+        <>
+            {renderTabContent()}
+
+            {/* Modal de creación */}
+            {showCreateModal && (
+                <CreateCouponModal
+                    onClose={() => setShowCreateModal(false)}
+                    onSubmit={handleCreateCoupon}
+                />
+            )}
+        </>
     );
 }
