@@ -1,5 +1,5 @@
 import React from 'react';
-import { ExternalLink, Copy } from 'lucide-react';
+import { ExternalLink, Copy, Plus } from 'lucide-react';
 
 interface PopularCoupon {
     id: string;
@@ -59,7 +59,11 @@ const getPlatformColor = (platform: string) => {
     return colors[platform as keyof typeof colors] || 'from-gray-500 to-gray-600';
 };
 
-export const PopularCoupons: React.FC = () => {
+interface PopularCouponsProps {
+    onCreateClick?: () => void;
+}
+
+export const PopularCoupons: React.FC<PopularCouponsProps> = ({ onCreateClick }) => {
     const copyToClipboard = (link: string) => {
         navigator.clipboard.writeText(link);
     };
@@ -68,8 +72,12 @@ export const PopularCoupons: React.FC = () => {
         <div className="mb-8">
             <div className="flex items-center justify-between mb-6">
                 <h2 className="text-lg font-semibold text-gray-900">Más Populares</h2>
-                <button className="text-emerald-600 hover:text-emerald-700 text-sm font-medium">
-                    Ver más
+                <button 
+                    onClick={onCreateClick}
+                    className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                >
+                    <Plus size={16} />
+                    Crear cupón
                 </button>
             </div>
 
@@ -117,6 +125,13 @@ export const PopularCoupons: React.FC = () => {
                         </div>
                     </div>
                 ))}
+            </div>
+            
+            {/* Ver más button centered below */}
+            <div className="flex justify-center mt-6">
+                <button className="text-emerald-600 hover:text-emerald-700 text-sm font-medium px-4 py-2 rounded-lg hover:bg-emerald-50 transition-colors">
+                    Ver más
+                </button>
             </div>
         </div>
     );

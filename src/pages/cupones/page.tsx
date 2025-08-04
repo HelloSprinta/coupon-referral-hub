@@ -2,9 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Header } from '@/components/Header';
-import { CouponsHeader } from '@/components/cupones/CouponsHeader';
 import { CouponsStats } from '@/components/cupones/CouponsStats';
-import { RankingWidget } from '@/components/cupones/RankingWidget';
 import { CouponsTabs } from '@/components/cupones/CouponsTabs';
 import { PopularCoupons } from '@/components/cupones/PopularCoupons';
 import { CouponsFilters } from '@/components/cupones/CouponsFilters';
@@ -70,18 +68,9 @@ export default function CuponesPage() {
         <div className="min-h-screen bg-gray-50">
             <Header />
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                {/* Header */}
-                <CouponsHeader onCreateClick={() => setShowCreateModal(true)} />
-
                 {/* Stats con Ranking */}
-                <div className="grid grid-cols-1 xl:grid-cols-4 gap-6 mb-8">
-                    <div className="xl:col-span-3">
-                        <CouponsStats stats={stats} loading={loading} />
-                    </div>
-                    <div className="xl:col-span-1">
-                        <RankingWidget />
-                    </div>
-                </div>
+                <CouponsStats stats={stats} loading={loading} />
+
 
                 {/* Pestañas de navegación */}
                 <CouponsTabs 
@@ -93,7 +82,7 @@ export default function CuponesPage() {
                 {activeTab === 'cupones' && (
                     <>
                         {/* Sección Más Populares */}
-                        <PopularCoupons />
+                        <PopularCoupons onCreateClick={() => setShowCreateModal(true)} />
 
                         {/* Título de la sección de análisis */}
                         <div className="mb-6">
