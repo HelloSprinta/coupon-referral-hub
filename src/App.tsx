@@ -1,30 +1,38 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./pages/Login";
-import Dashboard from "./pages/Dashboard";
-import NotFound from "./pages/NotFound";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from '@/components/AuthProvider';
+import { ProtectedRoute } from '@/components/ProtectedRoute';
+import Login from '@/pages/Login';
+import ControlPanel from '@/pages/ControlPanel';
+import CuponesPage from '@/pages/cupones/page';
 
-const queryClient = new QueryClient();
-
-const App = () => {
+function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </QueryClientProvider>
+    <Router>
+      <AuthProvider>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/control-panel"
+            element={
+              <ProtectedRoute>
+                <ControlPanel />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/cupones"
+            element={
+              <ProtectedRoute>
+                <CuponesPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/" element={<Navigate to="/control-panel" replace />} />
+        </Routes>
+      </AuthProvider>
+    </Router>
   );
-};
+}
 
 export default App;
