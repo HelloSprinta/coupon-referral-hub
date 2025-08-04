@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
+import { CHANNELS } from '@/config/channels';
 
 interface CreateCouponModalProps {
     onClose: () => void;
@@ -16,7 +17,8 @@ export const CreateCouponModal: React.FC<CreateCouponModalProps> = ({
         end_date: '',
         discount_percentage: '',
         description: '',
-        days_validity_free: ''
+        days_validity_free: '',
+        channel: ''
     });
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -84,13 +86,20 @@ export const CreateCouponModal: React.FC<CreateCouponModalProps> = ({
 
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">
-                            Canal *
+                            Canal de Difusión *
                         </label>
-                        <select className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                            <option>Seleccionar canal</option>
-                            <option>Instagram</option>
-                            <option>WhatsApp</option>
-                            <option>Email</option>
+                        <select 
+                            required
+                            value={formData.channel}
+                            onChange={(e) => setFormData({ ...formData, channel: e.target.value })}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        >
+                            <option value="">Seleccionar canal</option>
+                            {CHANNELS.map((channel) => (
+                                <option key={channel.id} value={channel.id}>
+                                    {channel.name}
+                                </option>
+                            ))}
                         </select>
                     </div>
 
@@ -141,7 +150,7 @@ export const CreateCouponModal: React.FC<CreateCouponModalProps> = ({
                             type="submit"
                             className="flex-1 px-4 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700"
                         >
-                            Crear Referido
+                            Crear Cupón
                         </button>
                     </div>
                 </form>

@@ -57,11 +57,6 @@ export const Header: React.FC = () => {
                             <Languages className="h-4 w-4 text-gray-600" />
                         </Button>
 
-                        {/* User email display */}
-                        <span className="text-sm text-gray-600 hidden sm:block">
-                            {user?.email || 'Usuario'}
-                        </span>
-
                         {/* Logout button */}
                         <Button
                             variant="ghost"
