@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Header } from '@/components/Header';
 import { CouponsStats } from '@/components/cupones/CouponsStats';
 import { CouponsTabs } from '@/components/cupones/CouponsTabs';
 import { PopularCoupons } from '@/components/cupones/PopularCoupons';
@@ -83,9 +82,7 @@ export default function CuponesPage() {
     }, [coupons, filters]);
 
     return (
-        <div className="min-h-screen bg-gray-50">
-            <Header />
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 {/* Stats con Ranking */}
                 <CouponsStats stats={stats} loading={loading} />
 
@@ -161,7 +158,6 @@ export default function CuponesPage() {
                         onSubmit={handleCreateCoupon}
                     />
                 )}
-            </div>
         </div>
     );
 }
